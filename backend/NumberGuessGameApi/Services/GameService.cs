@@ -2,6 +2,7 @@ using NumberGuessGameApi.Data;
 using NumberGuessGameApi.DTOs;
 using Microsoft.EntityFrameworkCore;
 using NumberGuessGameApi.Models;
+using NumberGuessGameApi.Helpers;
 
 namespace NumberGuessGameApi.Services;
 
@@ -32,7 +33,7 @@ public class GameService : IGameService
         Email = request.Email,
 
         // Más adelante reemplazaremos esto por un hash
-        PasswordHash = request.Password
+        PasswordHash = PasswordHelper.HashPassword(request.Password)
     };
 
     _context.Players.Add(player);
