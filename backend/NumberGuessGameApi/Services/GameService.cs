@@ -3,17 +3,20 @@ using NumberGuessGameApi.DTOs;
 using Microsoft.EntityFrameworkCore;
 using NumberGuessGameApi.Models;
 using NumberGuessGameApi.Helpers;
+using NumberGuessGameApi.Security;
 
 namespace NumberGuessGameApi.Services;
 
 public class GameService : IGameService
 {
     private readonly GameDbContext _context;
+    private readonly IConfiguration _configuration;
 
-    public GameService(GameDbContext context)
-    {
-        _context = context;
-    }
+    public GameService(GameDbContext context, IConfiguration configuration)
+{
+    _context = context;
+    _configuration = configuration;
+}
 
     public async Task<RegisterPlayerResponse> RegisterPlayerAsync(RegisterPlayerRequest request)
 {
@@ -40,9 +43,11 @@ public class GameService : IGameService
 
     await _context.SaveChangesAsync();
 
-    return new RegisterPlayerResponse
-    {
-        Token = "TOKEN_PROVISORIO"
-    };
+    var token = JwtHelper.GenerateToken(player, _configuration);
+
+return new RegisterPlayerResponse
+{
+    Token = token
+};
 }
 }
