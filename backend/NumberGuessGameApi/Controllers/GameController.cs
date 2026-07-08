@@ -29,4 +29,11 @@ public class GameController : ControllerBase
 
         return Ok(response);
     }
+    [HttpPost("new-game")]
+    public async Task<IActionResult> CreateGame(CreateGameRequest request)
+    {
+        var response = await _gameService.CreateGameAsync(request);
+
+        return Ok(response);
+    }
 }

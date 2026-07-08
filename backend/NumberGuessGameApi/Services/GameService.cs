@@ -76,4 +76,39 @@ public class GameService : IGameService
         Token = token
     };
 }
+public async Task<CreateGameResponse> CreateGameAsync(CreateGameRequest request)
+{
+    var player = await _context.Players
+        .FirstOrDefaultAsync(p => p.Id == request.PlayerId);
+
+    if (player == null)
+    {
+        throw new Exception("El jugador no existe.");
+    }
+
+    var random = new Random();
+
+    var digits = Enumerable.Range(0, 10)
+        .OrderBy(x => random.Next())
+        .Take(4);
+
+    var secretNumber = string.Concat(digits);
+
+    var game = new Game
+    {
+        PlayerId = request.PlayerId,
+        SecretNumber = secretNumber,
+        Status = GameStatus.Active
+    };
+
+    _context.Games.Add(game);
+
+    await _context.SaveChangesAsync();
+
+    return new CreateGameResponse
+    {
+        GameId = game.Id,
+        Message = "Partida creada correctamente."
+    };
+}
 }
