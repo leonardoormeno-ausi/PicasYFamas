@@ -22,4 +22,11 @@ public class GameController : ControllerBase
 
         return Ok(response);
     }
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginRequest request)
+    {
+        var response = await _gameService.LoginAsync(request);
+
+        return Ok(response);
+    }
 }
