@@ -111,4 +111,51 @@ public async Task<CreateGameResponse> CreateGameAsync(CreateGameRequest request)
         Message = "Partida creada correctamente."
     };
 }
+public async Task<GuessResponse> GuessAsync(GuessRequest request)
+{
+    var game = await _context.Games
+        .FirstOrDefaultAsync(g => g.Id == request.GameId);
+
+    if (game == null)
+    {
+        throw new Exception("La partida no existe.");
+    }
+
+    if (game.Status != GameStatus.Active)
+    {
+        throw new Exception("La partida ya finalizó.");
+    }
+
+    var result = GameEngine.Calculate(
+        game.SecretNumber,
+        request.Number);
+
+    var attempt = new Attempt
+    {
+        GameId = game.Id,
+        AttemptedNumber = request.Number,
+        Picas = result.picas,
+        Famas = result.famas
+    };
+
+    _context.Attempts.Add(attempt);
+
+    if (result.famas == 4)
+    {
+        game.Status = GameStatus.Finished;
+        game.FinishedAt = DateTime.UtcNow;
+    }
+
+    await _context.SaveChangesAsync();
+
+    return new GuessResponse
+    {
+        Picas = result.picas,
+        Famas = result.famas,
+        IsWinner = result.famas == 4,
+        Message = result.famas == 4
+            ? "¡Felicitaciones! Adivinaste el número."
+            : $"Obtuviste {result.picas} Picas y {result.famas} Famas."
+    };
+}
 }

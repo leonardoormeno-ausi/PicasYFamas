@@ -36,4 +36,11 @@ public class GameController : ControllerBase
 
         return Ok(response);
     }
+    [HttpPost("guess")]
+public async Task<IActionResult> Guess(GuessRequest request)
+{
+    var response = await _gameService.GuessAsync(request);
+
+    return Ok(response);
+}
 }
