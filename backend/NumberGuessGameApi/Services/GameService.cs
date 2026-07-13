@@ -76,10 +76,10 @@ public class GameService : IGameService
         Token = token
     };
 }
-public async Task<CreateGameResponse> CreateGameAsync(CreateGameRequest request)
+public async Task<CreateGameResponse> CreateGameAsync(int playerId)
 {
     var player = await _context.Players
-        .FirstOrDefaultAsync(p => p.Id == request.PlayerId);
+        .FirstOrDefaultAsync(p => p.Id == playerId);
 
     if (player == null)
     {
@@ -96,7 +96,7 @@ public async Task<CreateGameResponse> CreateGameAsync(CreateGameRequest request)
 
     var game = new Game
     {
-        PlayerId = request.PlayerId,
+        PlayerId = playerId,
         SecretNumber = secretNumber,
         Status = GameStatus.Active
     };
@@ -157,5 +157,23 @@ public async Task<GuessResponse> GuessAsync(GuessRequest request)
             ? "¡Felicitaciones! Adivinaste el número."
             : $"Obtuviste {result.picas} Picas y {result.famas} Famas."
     };
+}
+public async Task<List<GameHistoryResponse>> GetHistoryAsync(int playerId)
+{
+    var games = await _context.Games
+        .Where(g => g.PlayerId == playerId)
+        .Include(g => g.Attempts)
+        .OrderByDescending(g => g.CreatedAt)
+        .Select(g => new GameHistoryResponse
+        {
+            GameId = g.Id,
+            Status = g.Status.ToString(),
+            CreatedAt = g.CreatedAt,
+            FinishedAt = g.FinishedAt,
+            Attempts = g.Attempts.Count
+        })
+        .ToListAsync();
+
+    return games;
 }
 }
