@@ -111,14 +111,16 @@ public async Task<CreateGameResponse> CreateGameAsync(int playerId)
         Message = "Partida creada correctamente."
     };
 }
-public async Task<GuessResponse> GuessAsync(GuessRequest request)
+public async Task<GuessResponse> GuessAsync(int playerId, GuessRequest request)
 {
     var game = await _context.Games
-        .FirstOrDefaultAsync(g => g.Id == request.GameId);
+        .FirstOrDefaultAsync(g =>
+            g.Id == request.GameId &&
+            g.PlayerId == playerId);
 
     if (game == null)
     {
-        throw new Exception("La partida no existe.");
+        throw new Exception("La partida no existe o no pertenece al jugador.");
     }
 
     if (game.Status != GameStatus.Active)
@@ -180,7 +182,9 @@ public async Task<List<AttemptHistoryResponse>> GetAttemptsHistoryAsync(int play
 {
     var game = await _context.Games
         .Include(g => g.Attempts)
-        .FirstOrDefaultAsync(g => g.Id == gameId && g.PlayerId == playerId);
+        .FirstOrDefaultAsync(g =>
+            g.Id == gameId &&
+            g.PlayerId == playerId);
 
     if (game == null)
     {

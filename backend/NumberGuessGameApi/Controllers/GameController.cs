@@ -50,10 +50,19 @@ public async Task<IActionResult> CreateGame()
 
     return Ok(response);
 }
-    [HttpPost("guess")]
+  [HttpPost("guess")]
 public async Task<IActionResult> Guess(GuessRequest request)
 {
-    var response = await _gameService.GuessAsync(request);
+    var playerIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+    if (playerIdClaim == null)
+    {
+        return Unauthorized();
+    }
+
+    var playerId = int.Parse(playerIdClaim.Value);
+
+    var response = await _gameService.GuessAsync(playerId, request);
 
     return Ok(response);
 }
