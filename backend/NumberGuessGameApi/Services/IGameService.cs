@@ -9,4 +9,6 @@ public interface IGameService
     Task<CreateGameResponse> CreateGameAsync(int playerId);
     Task<GuessResponse> GuessAsync(GuessRequest request);
     Task<List<GameHistoryResponse>> GetHistoryAsync(int playerId);
+    Task<List<AttemptHistoryResponse>> GetAttemptsHistoryAsync(int playerId, int gameId);
+    Task<PlayerStatsResponse> GetPlayerStatsAsync(int playerId);
 }

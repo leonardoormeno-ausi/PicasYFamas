@@ -176,4 +176,58 @@ public async Task<List<GameHistoryResponse>> GetHistoryAsync(int playerId)
 
     return games;
 }
+public async Task<List<AttemptHistoryResponse>> GetAttemptsHistoryAsync(int playerId, int gameId)
+{
+    var game = await _context.Games
+        .Include(g => g.Attempts)
+        .FirstOrDefaultAsync(g => g.Id == gameId && g.PlayerId == playerId);
+
+    if (game == null)
+    {
+        throw new Exception("La partida no existe o no pertenece al jugador.");
+    }
+
+    return game.Attempts
+        .OrderBy(a => a.AttemptDate)
+        .Select(a => new AttemptHistoryResponse
+        {
+            AttemptedNumber = a.AttemptedNumber,
+            Picas = a.Picas,
+            Famas = a.Famas,
+            AttemptDate = a.AttemptDate
+        })
+        .ToList();
+}
+public async Task<PlayerStatsResponse> GetPlayerStatsAsync(int playerId)
+{
+    var games = await _context.Games
+        .Include(g => g.Attempts)
+        .Where(g => g.PlayerId == playerId)
+        .ToListAsync();
+
+    var gamesPlayed = games.Count;
+
+    var gamesWon = games.Count(g => g.Status == GameStatus.Finished);
+
+    var activeGames = games.Count(g => g.Status == GameStatus.Active);
+
+    var averageAttempts = gamesPlayed == 0
+        ? 0
+        : games.Average(g => g.Attempts.Count);
+
+    var bestGameAttempts = games
+        .Where(g => g.Status == GameStatus.Finished)
+        .Select(g => g.Attempts.Count)
+        .DefaultIfEmpty(0)
+        .Min();
+
+    return new PlayerStatsResponse
+    {
+        GamesPlayed = gamesPlayed,
+        GamesWon = gamesWon,
+        ActiveGames = activeGames,
+        AverageAttempts = Math.Round(averageAttempts, 2),
+        BestGameAttempts = bestGameAttempts
+    };
+}
 }

@@ -25,10 +25,11 @@ public static class JwtHelper
 
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, player.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, player.Email),
-            new Claim(JwtRegisteredClaimNames.UniqueName,
-                $"{player.FirstName} {player.LastName}")
+            new Claim(ClaimTypes.NameIdentifier, player.Id.ToString()),
+
+            new Claim(ClaimTypes.Email, player.Email),
+
+            new Claim(ClaimTypes.Name, $"{player.FirstName} {player.LastName}")
         };
 
         var token = new JwtSecurityToken(

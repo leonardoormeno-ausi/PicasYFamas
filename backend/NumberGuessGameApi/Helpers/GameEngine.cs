@@ -6,6 +6,12 @@ public static class GameEngine
         string secretNumber,
         string attemptedNumber)
     {
+        if (string.IsNullOrWhiteSpace(attemptedNumber))
+            throw new Exception("Debe ingresar un número.");
+
+        if (attemptedNumber.Length != 4)
+            throw new Exception("El número debe tener exactamente 4 dígitos.");
+
         int picas = 0;
         int famas = 0;
 

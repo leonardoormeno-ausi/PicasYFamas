@@ -73,4 +73,36 @@ public async Task<IActionResult> GetHistory()
 
     return Ok(response);
 }
+[HttpGet("history/{gameId}")]
+public async Task<IActionResult> GetAttemptsHistory(int gameId)
+{
+    var playerIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+    if (playerIdClaim == null)
+    {
+        return Unauthorized();
+    }
+
+    var playerId = int.Parse(playerIdClaim.Value);
+
+    var response = await _gameService.GetAttemptsHistoryAsync(playerId, gameId);
+
+    return Ok(response);
+}
+[HttpGet("stats")]
+public async Task<IActionResult> GetPlayerStats()
+{
+    var playerIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+    if (playerIdClaim == null)
+    {
+        return Unauthorized();
+    }
+
+    var playerId = int.Parse(playerIdClaim.Value);
+
+    var response = await _gameService.GetPlayerStatsAsync(playerId);
+
+    return Ok(response);
+}
 }
