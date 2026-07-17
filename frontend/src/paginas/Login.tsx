@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../servicios/authService";
-
+import "../styles/Login.css";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -29,7 +29,7 @@ function Login() {
 };
 
     return (
-        <div>
+        <div className="login-container">
             <h1>Picas y Famas</h1>
 
             <h2>Iniciar sesión</h2>

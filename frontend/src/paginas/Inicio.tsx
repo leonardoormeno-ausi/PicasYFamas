@@ -1,48 +1,51 @@
 import { iniciarPartida } from "../servicios/gameService";
 import { useNavigate } from "react-router-dom";
+import "../styles/Inicio.css";
 
 function Inicio() {
     const navigate = useNavigate();
 
     const nuevaPartida = async () => {
-    try {
-        const respuesta = await iniciarPartida();
+        try {
+            const respuesta = await iniciarPartida();
 
-        console.log(respuesta);
+            console.log(respuesta);
 
-        localStorage.setItem("gameId", respuesta.gameId);
+            localStorage.setItem("gameId", respuesta.gameId);
 
-        navigate("/juego");
-    } catch (error) {
-        console.error(error);
+            navigate("/juego");
+        } catch (error) {
+            console.error(error);
 
-        alert("No se pudo iniciar la partida");
-    }
-};
+            alert("No se pudo iniciar la partida");
+        }
+    };
 
     return (
-        <div>
+        <div className="inicio-container">
             <h1>Picas y Famas</h1>
 
             <h2>Bienvenido</h2>
 
             <hr />
 
-            <button onClick={nuevaPartida}>
-                Nueva partida
-            </button>
+            <div className="botones">
+                <button onClick={nuevaPartida}>
+                    Nueva partida
+                </button>
 
-            <br /><br />
+                <button>
+                    Historial
+                </button>
 
-            <button>Historial</button>
+                <button>
+                    Estadísticas
+                </button>
 
-            <br /><br />
-
-            <button>Estadísticas</button>
-
-            <br /><br />
-
-            <button>Cerrar sesión</button>
+                <button>
+                    Cerrar sesión
+                </button>
+            </div>
         </div>
     );
 }

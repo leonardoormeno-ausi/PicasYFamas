@@ -1,0 +1,44 @@
+.inicio-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,.15);
+}
+
+.inicio-container h1 {
+    text-align: center;
+    color: #1f4e79;
+}
+
+.inicio-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.botones {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 250px;
+    margin: 30px auto;
+}
+
+.botones button {
+    padding: 12px;
+    background: #1f4e79;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.botones button:hover{
+    background:#163a5b;
+    transform:translateY(-2px);
+}
+.botones button{
+    transition: .25s;
+}

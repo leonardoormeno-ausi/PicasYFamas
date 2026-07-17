@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { enviarIntento } from "../servicios/gameService";
+import "../styles/Juego.css";
+import Boton from "../componentes/Boton";
+import InputNumero from "../componentes/InputNumero";
+import TablaIntentos from "../componentes/TablaIntentos";
 
 function Juego() {
     const [numero, setNumero] = useState("");
     const [resultado, setResultado] = useState<any>(null);
+    const [historial, setHistorial] = useState<any[]>([]);
 
     const enviarIntentoHandler = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -15,8 +20,16 @@ function Juego() {
 
             setResultado(respuesta);
 
-            // Limpia el input después de enviar el intento
-            setNumero("");
+setHistorial((anterior) => [
+    ...anterior,
+    {
+        numero,
+        picas: respuesta.picas,
+        famas: respuesta.famas
+    }
+]);
+
+setNumero("");
         } catch (error) {
             console.error(error);
 
@@ -25,36 +38,28 @@ function Juego() {
     };
 
     return (
-        <div>
+        <div className="juego-container">
             <h1>Picas y Famas</h1>
 
             <h2>Juego</h2>
+            <form onSubmit={enviarIntentoHandler} className="formulario">
+            <label>Ingrese un número de 4 cifras</label>
 
-            <form onSubmit={enviarIntentoHandler}>
-                <label>Ingrese un número de 4 cifras</label>
+            <InputNumero
+                value={numero}
+                onChange={setNumero}
+            />
 
-                <br />
-                <br />
-
-                <input
-                    type="text"
-                    maxLength={4}
-                    value={numero}
-                    onChange={(e) => setNumero(e.target.value)}
+                <Boton
+                    texto="Adivinar"
+                    type="submit"
                 />
-
-                <br />
-                <br />
-
-                <button type="submit">
-                    Adivinar
-                </button>
-            </form>
+        </form>
+           <TablaIntentos historial={historial} />
+            
 
             {resultado && (
-                <div>
-                    <hr />
-
+                <div className="resultado">
                     <h3>Resultado</h3>
 
                     <p>
