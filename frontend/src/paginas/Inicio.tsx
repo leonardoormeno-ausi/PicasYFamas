@@ -20,6 +20,19 @@ function Inicio() {
             alert("No se pudo iniciar la partida");
         }
     };
+    const irAHistorial = () => {
+        navigate("/historial");
+    };
+    const irAEstadisticas = () => {
+        navigate("/estadisticas");
+    };
+    
+    const cerrarSesion = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("gameId");
+
+        navigate("/");
+    };
 
     return (
         <div className="inicio-container">
@@ -34,15 +47,16 @@ function Inicio() {
                     Nueva partida
                 </button>
 
-                <button>
+                <button onClick={irAHistorial}>
                     Historial
                 </button>
 
-                <button>
+                <button onClick={irAEstadisticas}>
                     Estadísticas
                 </button>
 
-                <button>
+
+                <button onClick={cerrarSesion}>
                     Cerrar sesión
                 </button>
             </div>

@@ -1,0 +1,46 @@
+.estadisticas-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,.15);
+}
+
+.estadisticas-container h1 {
+    text-align: center;
+    color: #1f4e79;
+}
+
+.estadisticas-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.estadisticas-card {
+    background: #eef6ff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.estadisticas-card p {
+    font-size: 18px;
+    margin: 15px 0;
+}
+
+.estadisticas-container button {
+    display: block;
+    margin: auto;
+    padding: 12px 25px;
+    background: #1f4e79;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.estadisticas-container button:hover {
+    background: #163a5b;
+}

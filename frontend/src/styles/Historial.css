@@ -1,0 +1,52 @@
+.historial-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .15);
+}
+
+.historial-container h1 {
+    text-align: center;
+    color: #1f4e79;
+}
+
+.historial-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th {
+    background: #1f4e79;
+    color: white;
+}
+
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.historial-container button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 12px 25px;
+    background: #1f4e79;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.historial-container button:hover {
+    background: #163a5b;
+}

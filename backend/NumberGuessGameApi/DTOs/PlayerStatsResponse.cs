@@ -10,5 +10,5 @@ public class PlayerStatsResponse
 
     public double AverageAttempts { get; set; }
 
-    public int BestGameAttempts { get; set; }
+    public int? BestGameAttempts { get; set; }
 }

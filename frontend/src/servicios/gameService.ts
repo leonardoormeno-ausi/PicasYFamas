@@ -17,6 +17,7 @@ export async function iniciarPartida() {
 
     return response.data;
 }
+
 export async function enviarIntento(numero: string) {
     const token = localStorage.getItem("token");
     const gameId = Number(localStorage.getItem("gameId"));
@@ -27,6 +28,35 @@ export async function enviarIntento(numero: string) {
             gameId,
             number: numero
         },
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
+
+    return response.data;
+}
+
+export async function obtenerHistorial() {
+    const token = localStorage.getItem("token");
+
+    const response = await axios.get(
+        `${API_URL}/history`,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
+
+    return response.data;
+}
+export async function obtenerEstadisticas() {
+    const token = localStorage.getItem("token");
+
+    const response = await axios.get(
+        `${API_URL}/stats`,
         {
             headers: {
                 Authorization: `Bearer ${token}`
