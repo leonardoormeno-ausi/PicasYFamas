@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { obtenerHistorial } from "../servicios/gameService";
+import { obtenerHistorial, obtenerIntentos } from "../servicios/gameService";
 import "../styles/Historial.css";
 
 type Partida = {
@@ -33,6 +33,17 @@ function Historial() {
             alert("No se pudo cargar el historial.");
         }
     };
+    const verIntentos = async (gameId: number) => {
+        try {
+            const datos = await obtenerIntentos(gameId);
+
+            console.log(datos);
+        } catch (error) {
+            console.error(error);
+
+            alert("No se pudieron obtener los intentos.");
+        }
+    };
 
     return (
         <div className="historial-container">
@@ -47,6 +58,7 @@ function Historial() {
                         <th>Estado</th>
                         <th>Intentos</th>
                         <th>Fecha</th>
+                        <th>Acción</th>
                     </tr>
                 </thead>
 
@@ -65,6 +77,14 @@ function Historial() {
 
                             <td>
                                 {new Date(partida.createdAt).toLocaleString()}
+                            </td>
+
+                            <td>
+                                <button
+                                    onClick={() => navigate(`/intentos/${partida.gameId}`)}
+                                >
+                                    Ver
+                                </button>
                             </td>
                         </tr>
                     ))}

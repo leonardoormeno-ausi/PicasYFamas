@@ -66,3 +66,17 @@ export async function obtenerEstadisticas() {
 
     return response.data;
 }
+export async function obtenerIntentos(gameId: number) {
+    const token = localStorage.getItem("token");
+
+    const response = await axios.get(
+        `${API_URL}/history/${gameId}`,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
+
+    return response.data;
+}
