@@ -76,3 +76,10 @@ table td{
     background:#eef5ff;
     border-left:5px solid #1f4e79;
 }
+.mensaje-error {
+    color: red;
+    font-size: 14px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
