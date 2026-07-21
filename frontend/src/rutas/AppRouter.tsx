@@ -6,6 +6,7 @@ import Juego from "../paginas/Juego";
 import Historial from "../paginas/Historial";
 import Estadisticas from "../paginas/Estadisticas";
 import Intentos from "../paginas/Intentos";
+import ComoJugar from "../paginas/ComoJugar";
 
 function AppRouter() {
     return (
@@ -17,6 +18,7 @@ function AppRouter() {
                 <Route path="/historial" element={<Historial />} />
                 <Route path="/estadisticas" element={<Estadisticas />} />
                 <Route path="/intentos/:gameId" element={<Intentos />} />
+                <Route path="/como-jugar" element={<ComoJugar />} />
             </Routes>
         </BrowserRouter>
     );

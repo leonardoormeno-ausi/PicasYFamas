@@ -26,8 +26,16 @@ function Inicio() {
     const irAEstadisticas = () => {
         navigate("/estadisticas");
     };
-    
+
     const cerrarSesion = () => {
+        const confirmar = window.confirm(
+            "¿Está seguro que desea cerrar sesión?"
+        );
+
+        if (!confirmar) {
+            return;
+        }
+
         localStorage.removeItem("token");
         localStorage.removeItem("gameId");
 
@@ -46,7 +54,12 @@ function Inicio() {
                 <button onClick={nuevaPartida}>
                     Nueva partida
                 </button>
+                
+                <button onClick={() => navigate("/como-jugar")}>
+                    📖 ¿Cómo jugar?
+                </button>
 
+               
                 <button onClick={irAHistorial}>
                     Historial
                 </button>
